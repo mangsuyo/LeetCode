@@ -38,13 +38,15 @@ class Solution {
 			int nextR = r + dr[i];
 			int nextC = c + dc[i];
 			if (nextR >= 0 && nextR < n && nextC >= 0 && nextC < m) {
-				if (board[nextR][nextC] == word.charAt(index)) {
-					char value = board[nextR][nextC];
-					board[nextR][nextC] = '.';
-					if (backtrack(nextR, nextC, board, word, sb, index + 1)) {
-						return true;
+				if(board[nextR][nextC] != '.') {
+					if (board[nextR][nextC] == word.charAt(index)) {
+						char value = board[nextR][nextC];
+						board[nextR][nextC] = '.';
+						if (backtrack(nextR, nextC, board, word, sb, index + 1)) {
+							return true;
+						}
+						board[nextR][nextC] = value;
 					}
-					board[nextR][nextC] = value;
 				}
 			}
 		}
