@@ -2,34 +2,47 @@ import java.util.*;
 
 class Solution {
 
+	String answer;
+	int count = 0;
+	boolean[] visitied;
+
 	public String getPermutation(int n, int k) {
-		List<List<String>> answer = new ArrayList<>();
-		boolean[] visited = new boolean[n + 1];
-		return backtracking(n, k, new ArrayList<>(), answer, visited);
+		visitied = new boolean[n + 1];
+		String result = backtracking(n, k, new ArrayList<>());
+		if(!result.isEmpty()){
+			return result;
+		}
+		return "NO";
 	}
 
-	private String backtracking(int n, int k, List<String> list, List<List<String>> answer, boolean[] visited) {
-		if (list.size() == n) {
-			answer.add(new ArrayList<>(list));
-			if(answer.size() == k){
-				return String.join("", answer.get(answer.size() - 1));
+	private String backtracking(int n, int k, List<String> list) {
+
+		if(list.size() == n){
+			count += 1;
+			if(count == k){
+				return String.join("", list);
 			}
+		}
+
+		if(count > k){
 			return null;
 		}
 
-		for (int i = 1; i <= n; i++) {
-			if (!visited[i]) {
+
+
+		for(int i = 1; i <= n; i++){
+			if(!visitied[i]) {
 				list.add(String.valueOf(i));
-				visited[i] = true;
-				String result = backtracking(n, k, list, answer, visited);
+				visitied[i] = true;
+				String result = backtracking(n, k, list);
 				if(result != null){
 					return result;
 				}
-				visited[i] = false;
+				visitied[i] = false;
 				list.remove(list.size() - 1);
 			}
 		}
-		
+
 		return null;
 	}
 }
