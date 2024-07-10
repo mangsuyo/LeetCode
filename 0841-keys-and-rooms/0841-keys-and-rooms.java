@@ -3,16 +3,12 @@ import java.util.*;
 class Solution {
 
 	public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-		Map<Integer, List<Integer>> graph = new HashMap<>();
-		for (int i = 0; i < rooms.size(); i++) {
-			graph.putIfAbsent(i, new ArrayList<>());
-			graph.put(i, rooms.get(i));
-		}
+		System.out.println(rooms);
 		int startVertex = 0;
-		return bfs(startVertex, graph, new HashSet<>()) == rooms.size();
+		return bfs(startVertex, rooms, new HashSet<>()) == rooms.size();
 	}
 
-	private int bfs(int startVertex, Map<Integer, List<Integer>> graph, Set<Integer> visited) {
+	private int bfs(int startVertex, List<List<Integer>> graph, Set<Integer> visited) {
 		Queue<Integer> queue = new ArrayDeque<>();
 		queue.add(startVertex);
 		visited.add(startVertex);
