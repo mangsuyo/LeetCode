@@ -3,7 +3,6 @@ import java.util.*;
 class Solution {
 
 	public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-		System.out.println(rooms);
 		int startVertex = 0;
 		return bfs(startVertex, rooms, new HashSet<>()) == rooms.size();
 	}
