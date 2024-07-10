@@ -9,10 +9,10 @@ class Solution {
 			graph.put(i, rooms.get(i));
 		}
 		int startVertex = 0;
-		return bfs(startVertex, graph, new ArrayList<>()) == rooms.size();
+		return bfs(startVertex, graph, new HashSet<>()) == rooms.size();
 	}
 
-	private int bfs(int startVertex, Map<Integer, List<Integer>> graph, List<Integer> visited) {
+	private int bfs(int startVertex, Map<Integer, List<Integer>> graph, Set<Integer> visited) {
 		Queue<Integer> queue = new ArrayDeque<>();
 		queue.add(startVertex);
 		visited.add(startVertex);
