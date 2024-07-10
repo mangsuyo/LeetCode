@@ -2,7 +2,7 @@ import java.util.*;
 
 class Solution {
 
-	String answer;
+	String answer = null;
 	int count = 0;
 	boolean[] visitied;
 
@@ -18,6 +18,7 @@ class Solution {
 			count += 1;
 			if(count == k){
 				answer = String.join("", list);
+				return;
 			}
 		}
 
@@ -30,6 +31,7 @@ class Solution {
 				list.add(String.valueOf(i));
 				visitied[i] = true;
 				backtracking(n, k, list);
+				if(answer != null) return;
 				visitied[i] = false;
 				list.remove(list.size() - 1);
 			}
