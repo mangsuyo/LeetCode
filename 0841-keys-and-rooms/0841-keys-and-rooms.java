@@ -1,27 +1,28 @@
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.List;
 
 class Solution {
-
 	public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-		int startVertex = 0;
-		return bfs(startVertex, rooms, new HashSet<>()) == rooms.size();
-	}
+		Deque<Integer> queue = new ArrayDeque<>();
+		boolean[] visited = new boolean[rooms.size()];
 
-	private int bfs(int startVertex, List<List<Integer>> graph, Set<Integer> visited) {
-		Queue<Integer> queue = new ArrayDeque<>();
-		queue.add(startVertex);
-		visited.add(startVertex);
+		queue.add(0);
 
-		while (!queue.isEmpty()) {
-			int currentVertex = queue.poll();
-			for (int vertex : graph.get(currentVertex)) {
-				if (!visited.contains(vertex)) {
-					queue.add(vertex);
-					visited.add(vertex);
+		while(!queue.isEmpty()) {
+			int cur = queue.poll();
+			visited[cur] = true;
+			List<Integer> room = rooms.get(cur);
+			for(int i = 0; i < room.size(); i++){
+				if(!visited[room.get(i)]){
+					queue.add(room.get(i));
 				}
 			}
 		}
 
-		return visited.size();
+		for(int i = 0; i < visited.length; i++){
+			if(!visited[i]){return false;}
+		}
+		return true;
 	}
 }
