@@ -1,28 +1,31 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 class Solution {
 	public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-		Deque<Integer> queue = new ArrayDeque<>();
+		
+		Queue<Integer> queue = new ArrayDeque<>();
 		boolean[] visited = new boolean[rooms.size()];
-
+		
 		queue.add(0);
-
-		while(!queue.isEmpty()) {
-			int cur = queue.poll();
-			visited[cur] = true;
-			List<Integer> room = rooms.get(cur);
-			for(int i = 0; i < room.size(); i++){
-				if(!visited[room.get(i)]){
-					queue.add(room.get(i));
+		visited[0] = true;
+		
+		while(!queue.isEmpty()){
+			int newVertex = queue.poll();
+			List<Integer> keys = rooms.get(newVertex);
+			for(Integer key : keys){
+				if(!visited[key]){
+					visited[key] = true;
+					queue.add(key);
 				}
 			}
 		}
-
+		
 		for(int i = 0; i < visited.length; i++){
-			if(!visited[i]){return false;}
+			if(!visited[i]){
+				return false;
+			}
 		}
+		
 		return true;
 	}
 }
