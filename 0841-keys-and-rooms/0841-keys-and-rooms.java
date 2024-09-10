@@ -2,30 +2,24 @@ import java.util.*;
 
 class Solution {
 	public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-		
-		Queue<Integer> queue = new ArrayDeque<>();
-		boolean[] visited = new boolean[rooms.size()];
-		
-		queue.add(0);
-		visited[0] = true;
-		
-		while(!queue.isEmpty()){
-			int newVertex = queue.poll();
-			List<Integer> keys = rooms.get(newVertex);
-			for(Integer key : keys){
-				if(!visited[key]){
-					visited[key] = true;
-					queue.add(key);
-				}
+		Set<Integer> visited = new HashSet<>();
+		visited.add(0);
+		dfs(rooms, 0, visited);
+
+		System.out.println(visited.size());
+
+		return visited.size() == rooms.size();
+	}
+
+	void dfs(List<List<Integer>> rooms, int vertex, Set<Integer> visited){
+		List<Integer> room = rooms.get(vertex);
+
+		for(Integer key: room){
+			if(!visited.contains(key)){
+				visited.add(key);
+				dfs(rooms, key, visited);
 			}
 		}
-		
-		for(int i = 0; i < visited.length; i++){
-			if(!visited[i]){
-				return false;
-			}
-		}
-		
-		return true;
+
 	}
 }
