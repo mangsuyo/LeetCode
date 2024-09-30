@@ -14,7 +14,8 @@ class Solution {
 	}
 
 	int dp(int[][] memo, int row, int col) {
-		if (row == 0 || col == 0) memo[row][col] = 1;
+		if (row == 0 || col == 0)
+			return 1;
 
 		if (memo[row][col] == -1) {
 			memo[row][col] = dp(memo, row - 1, col) + dp(memo, row, col - 1);
