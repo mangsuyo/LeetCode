@@ -9,17 +9,17 @@ class Solution {
 		this.n = board.length;
 		this.m = board[0].length;
 
-		char[][] clone = new char[n][m];
+		// char[][] clone = new char[n][m];
+		//
+		// for (int i = 0; i < n; i++) {
+		// 	clone[i] = board[i].clone();
+		// }
 
-		for (int i = 0; i < n; i++) {
-			clone[i] = board[i].clone();
-		}
+		backtrack(board, 0);
 
-		backtrack(clone, 0);
-
-		for (int i = 0; i < n; i++) {
-			board[i] = clone[i].clone();
-		}
+		// for (int i = 0; i < n; i++) {
+		// 	board[i] = clone[i].clone();
+		// }
 	}
 
 	public boolean backtrack(char[][] clone, int count) {
