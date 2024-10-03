@@ -1,73 +1,55 @@
-import java.util.Arrays;
-
 class Solution {
-
-	int n;
-	int m;
-
 	public void solveSudoku(char[][] board) {
-		this.n = board.length;
-		this.m = board[0].length;
-
-		// char[][] clone = new char[n][m];
-		//
-		// for (int i = 0; i < n; i++) {
-		// 	clone[i] = board[i].clone();
-		// }
+		int n = board.length;
+		int m = board[0].length;
 
 		backtrack(board, 0);
-
-		// for (int i = 0; i < n; i++) {
-		// 	board[i] = clone[i].clone();
-		// }
 	}
 
-	public boolean backtrack(char[][] clone, int count) {
-
-		if (count == 81)
+	boolean backtrack(char[][] board, int index) {
+		if (index == 81)
 			return true;
 
-		int r = count / 9;
-		int c = count % 9;
+		int row = index / 9;
+		int col = index % 9;
 
-		if (clone[r][c] != '.')
-			return backtrack(clone, count + 1);
+		if (board[row][col] != '.')
+			return backtrack(board, index + 1);
+
 		else {
 			for (int i = 1; i <= 9; i++) {
-				char nextValue = (char)('0' + i);
-				if (isValid(clone, nextValue, r, c)) {
-					clone[r][c] = nextValue;
-					if (backtrack(clone, count + 1))
-						return true;
-					clone[r][c] = '.';
+				char number = (char)('0' + i);
+				if (isValid(board, row, col, number)) {
+					board[row][col] = number;
+					if (backtrack(board, index + 1)) return true;
+					board[row][col] = '.';
 				}
 			}
 		}
+
 		return false;
+
 	}
 
-	boolean isValid(char[][] board, char nextValue, int row, int col) {
-
-		for (int i = 0; i < 9; i++) {
-			if (board[row][i] == nextValue) {
-				return false;
-			}
-		}
-
-		for (int i = 0; i < 9; i++) {
-			if (board[i][col] == nextValue) {
-				return false;
-			}
-		}
+	boolean isValid(char[][] board, int row, int col, char number) {
 
 		int r = row / 3;
 		int c = col / 3;
 
+		for (int i = 0; i < 9; i++) {
+			if (number == board[row][i])
+				return false;
+		}
+
+		for (int i = 0; i < 9; i++) {
+			if (number == board[i][col])
+				return false;
+		}
+
 		for (int i = r * 3; i < r * 3 + 3; i++) {
 			for (int j = c * 3; j < c * 3 + 3; j++) {
-				if (board[i][j] == nextValue) {
+				if (number == board[i][j])
 					return false;
-				}
 			}
 		}
 
