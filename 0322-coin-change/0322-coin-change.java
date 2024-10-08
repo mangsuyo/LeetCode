@@ -2,40 +2,32 @@ import java.util.*;
 
 class Solution {
 
-	static class Pair {
-		int amount;
-		int count;
-
-		public Pair(int amount, int count) {
-			this.amount = amount;
-			this.count = count;
-		}
-	}
+	int min = Integer.MAX_VALUE;
+	int[] memo;
 
 
 	public int coinChange(int[] coins, int amount) {
-		return bfs(coins, amount);
+		memo = new int[amount + 1];
+		Arrays.fill(memo, -1);
+		dfs(coins, amount, 0);
+		if(min == Integer.MAX_VALUE) return -1;
+		return min;
 	}
 
-	int bfs(int[] coins, int amount) {
-		Queue<Pair> queue = new ArrayDeque<>();
-		boolean[] visited = new boolean[amount];
-
-		queue.add(new Pair(amount, 0));
-
-		while (!queue.isEmpty()) {
-			Pair cur = queue.poll();
-			if(cur.amount == 0) return cur.count;
-			for (int coin : coins) {
-				int diff = cur.amount - coin;
-				if (diff >= 0 && !visited[diff]) {
-					queue.add(new Pair(diff, cur.count + 1));
-					visited[diff] = true;
-				}
-			}
+	void dfs(int[] coins, int amount, int count) {
+		if (amount == 0)
+		{
+			if(min > count) min = count;
+			return;
 		}
+		if (amount < 0)
+			return;
+		
+		if(memo[amount] != -1 && memo[amount] <= count) return;
+		memo[amount] = count;
 
-		return -1;
+		for (int coin : coins) {
+			dfs(coins, amount - coin, count + 1);
+		}
 	}
-
 }
