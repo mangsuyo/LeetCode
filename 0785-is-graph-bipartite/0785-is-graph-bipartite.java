@@ -1,51 +1,42 @@
-import java.util.*;
+import java.util.Arrays;
 
 class Solution {
-	// class Fair {
-	// 	int first;
-	// 	char second;
-	//
-	// 	public Fair(int first, char second) {
-	// 		this.first = first;
-	// 		this.second = second;
-	// 	}
-	//
-	// 	@Override
-	// 	public String toString() {
-	// 		return "Fair{" +
-	// 			"first=" + first +
-	// 			", second=" + second +
-	// 			'}';
-	// 	}
-	// }
+
+	char[] colors;
 
 	public boolean isBipartite(int[][] graph) {
-		char[] chars = new char[graph.length];
-		Arrays.fill(chars, 'N');
-
-		for(int i = 0 ; i < graph.length; i++){
-			if(chars[i] == 'N') {
-				if(!dfs(i, graph, chars, 'A')) return false;
+		colors = new char[graph.length];
+		Arrays.fill(colors, 'C');
+		
+		for(int i = 0; i < graph.length; i++){
+			if(colors[i] == 'C'){
+				if(!dfs(graph, i, 'A')) return false;
 			}
 		}
-
-		for(int i = 0; i < chars.length; i++){
-			System.out.println(chars[i]);
-		}
-
+		
 		return true;
 	}
 
-	boolean dfs(int index, int[][] graph, char[] chars, char ch) {
-		chars[index] = ch;
-		for (int key : graph[index]) {
-			if (chars[key] == 'N') {
-					if (!dfs(key, graph, chars, ch == 'A' ? 'B' : 'A'))
+	boolean dfs(int[][] graph, int index, char color) {
+		colors[index] = color;
+
+		int[] nodes = graph[index];
+		for (int node : nodes) {
+			if (colors[node] == 'C') {
+				if (color == 'A') {
+					if (!dfs(graph, node, 'B'))
 						return false;
-			} else if(chars[key] == ch) {
-				return false;
+				} else {
+					if (!dfs(graph, node, 'A'))
+						return false;
+				}
+			} else {
+				if (colors[node] == color) {
+					return false;
+				}
 			}
 		}
+
 		return true;
 	}
 
