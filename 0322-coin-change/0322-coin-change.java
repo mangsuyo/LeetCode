@@ -12,24 +12,20 @@ class Solution {
 		}
 	}
 
+
 	public int coinChange(int[] coins, int amount) {
 		return bfs(coins, amount);
 	}
 
 	int bfs(int[] coins, int amount) {
 		Queue<Pair> queue = new ArrayDeque<>();
-		List<Integer> answers = new ArrayList<>();
+		boolean[] visited = new boolean[amount];
+
 		queue.add(new Pair(amount, 0));
-		boolean[] visited = new boolean[amount + 1];
-		visited[amount] = true;
 
 		while (!queue.isEmpty()) {
 			Pair cur = queue.poll();
-			if (cur.amount == 0) {
-				return cur.count;
-			}
-			if (cur.amount < 0)
-				continue;
+			if(cur.amount == 0) return cur.count;
 			for (int coin : coins) {
 				int diff = cur.amount - coin;
 				if (diff >= 0 && !visited[diff]) {
@@ -41,4 +37,5 @@ class Solution {
 
 		return -1;
 	}
+
 }
