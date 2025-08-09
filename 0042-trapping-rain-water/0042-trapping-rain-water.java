@@ -1,51 +1,55 @@
 import java.util.*;
 
 class Solution {
-	public int trap(int[] height) {
 
-		Deque<List<Integer>> stack = new ArrayDeque<>();
-		int[] graph = new int[height.length];
+    int n;
+    public int trap(int[] height) {
+        n = height.length;
+        
+        ArrayDeque<Pair> stack = new ArrayDeque<>();
+        int[] wall = new int[n];
+        for(int i = 0; i < n; i++){
+            wall[i] = height[i];
+        }
+
+        for(int i = 0; i < n; i++){
+            if(wall[i] > 0){
+                while(!stack.isEmpty() && stack.peek().height <= wall[i]){
+                    Pair pair = stack.pop();
+                    for(int j = pair.index + 1; j < i; j++){
+                        wall[j] = pair.height;
+                    }
+                }
+                stack.push(new Pair(i, wall[i]));
+            }   
+        }
+        int answer = 0;
+
+        while(!stack.isEmpty()){
+            Pair pair = stack.pop();
+            if(stack.isEmpty()) break;
+            Pair peek = stack.peek();
+            for(int i = peek.index + 1; i < pair.index; i++){
+                wall[i] = pair.height;
+            }
+        }
+
+        for(int i = 0; i < n; i++){
+            answer += (wall[i] - height[i]);
+        }
 
 
-		for(int i = 0; i < height.length; i++){
-			graph[i] = height[i];
-		}
 
-		int water = 0;
+        return answer;
+    }
+}
 
-		int firstIdx = 0;
+class Pair{
+    int index;
+    int height;
 
-		for (int i = 0; i < height.length; i++) {
-			if (height[i] > 0) {
-				firstIdx = i;
-				break;
-			}
-		}
-
-		for (int i = firstIdx; i < height.length; i++) {
-			while (!stack.isEmpty() && height[i] >= stack.peek().get(1)) {
-				List<Integer> info = stack.pop();
-				for(int j = info.get(0) + 1; j < i; j++){
-					graph[j] = info.get(1);
-				}
-			}
-			stack.push(List.of(i, height[i]));
-		}
-
-		while(!stack.isEmpty()){
-			List<Integer> wall1 = stack.pop();
-			if(!stack.isEmpty()){
-				for(int j = stack.peek().get(0) + 1; j < wall1.get(0); j++){
-					graph[j] = wall1.get(1);
-				}
-			}
-
-		}
-
-		for(int i = firstIdx; i < height.length; i++){
-			water += graph[i] - height[i];
-		}
-
-		return water;
-	}
+    public Pair(int index, int height){
+        this.index = index;
+        this.height = height;
+    }
 }
