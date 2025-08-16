@@ -1,12 +1,12 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        Map<Integer, List<Integer>> edges = new HashMap<>();
+        Map<Integer, List<Integer>> map = new HashMap<>();
         int[] indegree = new int[numCourses];
 
-        for(int[] prerequisite: prerequisites){
-            edges.putIfAbsent(prerequisite[1], new ArrayList<>());
-            edges.get(prerequisite[1]).add(prerequisite[0]);
-            indegree[prerequisite[0]]++;
+        for(int[] p: prerequisites){
+            map.putIfAbsent(p[1], new ArrayList<>());
+            map.get(p[1]).add(p[0]);
+            indegree[p[0]]++;
         }
 
         Queue<Integer> queue = new ArrayDeque<>();
@@ -14,26 +14,24 @@ class Solution {
 
         for(int i = 0; i < numCourses; i++){
             if(indegree[i] == 0){
-                queue.add(i);
+                queue.offer(i);
                 count++;
             }
         }
 
         while(!queue.isEmpty()){
-            int curV = queue.poll();
-            if(edges.containsKey(curV)){
-                for(int next: edges.get(curV)){
-                    indegree[next]--;
-                    if(indegree[next] == 0){
-                        count++;
-                        queue.add(next);
-                    }
+            int curNode = queue.poll();
+            if(map.containsKey(curNode)){
+                for(int nextNode: map.get(curNode)){
+                    indegree[nextNode]--;
+                    if(indegree[nextNode] == 0) {
+                        count += 1;
+                        queue.offer(nextNode);
+                    }    
                 }
             }
         }
-        
+
         return count == numCourses;
-
-
     }
 }
