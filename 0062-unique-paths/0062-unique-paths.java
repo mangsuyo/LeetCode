@@ -1,26 +1,24 @@
-import java.util.*;
-
 class Solution {
-	public int uniquePaths(int m, int n) {
-		int[][] memo = new int[m][n];
 
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				memo[i][j] = -1;
-			}
-		}
+    int[][] memo;
 
-		return dp(memo, m - 1, n - 1);
-	}
+    public int uniquePaths(int m, int n) {
+        memo = new int[m][n];
+        for(int i = 0; i < m ; i++){
+            Arrays.fill(memo[i], -1);
+        }
 
-	int dp(int[][] memo, int row, int col) {
-		if (row == 0 || col == 0)
-			return 1;
+        return dp(m - 1, n - 1);
+    }
 
-		if (memo[row][col] == -1) {
-			memo[row][col] = dp(memo, row - 1, col) + dp(memo, row, col - 1);
-		}
+    int dp(int r, int c){
+        if(r == 0 && c == 0) return 1;
+        if(r < 0 || c < 0) return 0;
 
-		return memo[row][col];
-	}
+        if(memo[r][c] == -1){
+            memo[r][c] = dp(r - 1, c) + dp(r, c - 1);
+        }
+
+        return memo[r][c];   
+    }
 }
