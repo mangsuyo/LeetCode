@@ -1,33 +1,35 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        Map<Integer, List<Integer>> map = new HashMap<>();
+        Map<Integer, List<Integer>> graph = new HashMap<>();
         int[] indegree = new int[numCourses];
 
-        for(int[] p: prerequisites){
-            map.putIfAbsent(p[1], new ArrayList<>());
-            map.get(p[1]).add(p[0]);
-            indegree[p[0]]++;
+        for(int[] prerequisite: prerequisites){
+            graph.putIfAbsent(prerequisite[1], new ArrayList<>());
+            graph.get(prerequisite[1]).add(prerequisite[0]);
+            indegree[prerequisite[0]] += 1;
         }
 
         Queue<Integer> queue = new ArrayDeque<>();
+
         int count = 0;
 
         for(int i = 0; i < numCourses; i++){
             if(indegree[i] == 0){
                 queue.offer(i);
-                count++;
+                count += 1;
             }
         }
 
+
         while(!queue.isEmpty()){
             int curNode = queue.poll();
-            if(map.containsKey(curNode)){
-                for(int nextNode: map.get(curNode)){
-                    indegree[nextNode]--;
-                    if(indegree[nextNode] == 0) {
-                        count += 1;
+            if(graph.containsKey(curNode)){
+                for(int nextNode: graph.get(curNode)){
+                    indegree[nextNode] -= 1;
+                    if(indegree[nextNode] == 0){
                         queue.offer(nextNode);
-                    }    
+                        count += 1;
+                    }
                 }
             }
         }
