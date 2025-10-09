@@ -1,50 +1,48 @@
+import java.util.*;
+
 class Solution {
 
-	int n;
-	int m;
-	String target;
+    int m;
+    int n;
+    int[] dr = new int[]{-1, 1, 0, 0};
+    int[] dc = new int[]{0, 0, -1, 1};
 
-	int[] dr = {-1, 1, 0, 0};
-	int[] dc = {0, 0, -1, 1};
+    boolean[][] visited;
 
-	public boolean exist(char[][] board, String word) {
-		n = board.length;
-		m = board[0].length;
-		target = word;
+    public boolean exist(char[][] board, String word) {
+        m = board.length;
+        n = board[0].length;
+        visited = new boolean[m][n];
+        
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(board[i][j] == word.charAt(0)){
+                    visited[i][j] = true;
+                    if(dfs(i, j, board, word, 1)) return true;
+                    visited[i][j] = false;
+                }
+            }
+        }
+        
+        return false;
+    }
 
-		for(int i = 0; i < board.length; i++){
-			for(int j = 0; j < board[0].length; j++){
-				if(board[i][j] == word.charAt(0)){
-					if(dfs(board, i, j, 0)){
-						return true;
-					};
-				}
-			}
-		}
+    boolean dfs(int x, int y, char[][] board, String word, int count){
+        if(count == word.length()) return true;
 
-		return false;
-	}
+        for(int i = 0; i < 4; i++){
+            int nextR = dr[i] + x;
+            int nextC = dc[i] + y;
 
-	boolean dfs(char[][] board, int i, int j, int count){
-		if(count == target.length() - 1){
-			return true;
-		}
+            if(0 <= nextR && nextR < m && 0 <= nextC && nextC < n){
+                if(!visited[nextR][nextC] && board[nextR][nextC] == word.charAt(count)){
+                    visited[nextR][nextC] = true;
+                    if(dfs(nextR, nextC, board, word, count + 1)) return true;;
+                    visited[nextR][nextC] = false;
+                }
+            }
+        }
 
-		for(int k = 0; k < 4; k++){
-			int nextR = i + dr[k];
-			int nextC = j + dc[k];
-			if(nextR >= 0 && nextR < n && nextC >= 0 && nextC < m){
-				if(board[nextR][nextC] == target.charAt(count + 1)){
-					char ch = board[i][j];
-					board[i][j] = '.';
-					if(dfs(board, nextR, nextC, count + 1)){
-						return true;
-					};
-					board[i][j] = ch;
-				}
-			}
-		}
-
-		return false;
-	}
+        return false;
+    }
 }
