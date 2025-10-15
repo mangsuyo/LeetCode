@@ -1,35 +1,43 @@
-import java.util.*;
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> answer = new ArrayList<>();
 
-class Solution{
+        backtrack(s, 0, answer, new ArrayList<>());
+        return answer;
+    }
 
-	public List<List<String>> partition(String s){
-		List<List<String>> answer = new ArrayList<>();
 
-		backtrack(0, answer, s, new ArrayList<>());
+    void backtrack(String s, int start, List<List<String>> answer, List<String> list){
+        
+        if(start == s.length()){
+            answer.add(new ArrayList<>(list));
+            return;
+        }
 
-		return answer;
-	}
+        for(int i = start; i < s.length(); i++){
+            String sub = s.substring(start, i + 1);
+            if(isPalindrome(sub)){
+                list.add(sub);
+                backtrack(s, i + 1, answer, list);
+                list.remove(list.size() - 1);
+            }
+        }
+    }
 
-	private void backtrack(int start, List<List<String>> answer, String s, List<String> list){
+    boolean isPalindrome(String sub){
+        int left = 0;
+        int right = sub.length() - 1;
+        
+        while(left < right){
+            if(sub.charAt(left) != sub.charAt(right)){ return false;
+            }
+            else{
+                left += 1;
+                right -= 1;
+            }
+        }
 
-		if(start == s.length()){
-			answer.add(new ArrayList<>(list));
-			return;
-		}
+        return true;
 
-		for(int i = start + 1; i <= s.length(); i++){
-			String subStr = s.substring(start, i);
-			if(isPalindrome(subStr)) {
-				list.add(subStr);
-				backtrack(i, answer, s, list);
-				list.remove(list.size() - 1);
-			}
-		}
-
-	}
-
-	private boolean isPalindrome(String s){
-		return s.equals((new StringBuilder(s)).reverse().toString());
-	}
-
+    }
 }
