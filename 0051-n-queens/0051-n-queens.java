@@ -1,69 +1,57 @@
-import java.util.*;
-
 class Solution {
 
-    int[] dr = new int[] {-1, -1, 1, 1};
-    int[] dc = new int[] {-1, 1, -1, 1};
-
+    List<List<String>> answer; 
     public List<List<String>> solveNQueens(int n) {
-        List<List<String>> answer = new ArrayList<>();
-        char[][] graph = new char[n][n];
-
-        for (int i = 0; i < n; i++) {
-            Arrays.fill(graph[i], '.');
+        char[][] board = new char[n][n];
+        answer = new ArrayList<>();
+        for(int i = 0; i < n; i++){
+            Arrays.fill(board[i], '.');
         }
-
-        backtrack(n, 0, graph, answer);
-
+        backtrack(board, n, 0);
         return answer;
     }
 
-    boolean backtrack(int n, int row, char[][] graph, List<List<String>> answer) {
-
-        // 모든 퀸을 배치했을 경우 답을 저장
-        if (row == n) {
-            List<String> temp = new ArrayList<>();
-            for (int i = 0; i < n; i++) {
-                temp.add(new String(graph[i]));
+    void backtrack(char[][] board, int n, int row){
+        if(row == n){
+            List<String> list = new ArrayList<>();
+            for(int i = 0; i < n; i++){
+                list.add(new String(board[i]));
             }
-            answer.add(temp);
-            return false; // 더 많은 답을 찾기 위해 false 반환
+            answer.add(new ArrayList<>(list));
         }
 
-        // 현재 row에 퀸을 배치할 열(column)을 탐색
-        for (int col = 0; col < n; col++) {
-            if (isValid(graph, row, col, n)) {
-                graph[row][col] = 'Q';  // 퀸을 배치
-                backtrack(n, row + 1, graph, answer);  // 다음 행으로 진행
-                graph[row][col] = '.';  // 백트래킹: 퀸을 제거
+        for(int col = 0; col < n; col++){
+            if(isValid(board, n, row, col)){
+                board[row][col] = 'Q';
+                backtrack(board, n, row + 1);
+                board[row][col] = '.';
             }
         }
-        return false;
     }
 
-    // 퀸이 row, col에 배치되는 것이 유효한지 확인
-    boolean isValid(char[][] graph, int row, int col, int n) {
-        // 같은 열에 있는 퀸을 검사
-        for (int i = 0; i < row; i++) {
-            if (graph[i][col] == 'Q') {
-                return false;
-            }
+    boolean isValid(char[][] board, int n, int row, int col){
+        for(int i = 0; i < row; i++){
+            if(board[i][col] == 'Q') return false;
         }
 
-        // 왼쪽 위 대각선 검사
-        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-            if (graph[i][j] == 'Q') {
-                return false;
-            }
+        int r = row;
+        int c = col;
+        while(r > 0 && c > 0){
+            r--;
+            c--;
+            if(board[r][c] == 'Q') return false;
         }
 
-        // 오른쪽 위 대각선 검사
-        for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
-            if (graph[i][j] == 'Q') {
-                return false;
-            }
+        r = row;
+        c = col;
+        while(r > 0 && c < n - 1){
+            r--;
+            c++;
+            if(board[r][c] == 'Q') return false;
         }
 
         return true;
     }
+
+
 }
