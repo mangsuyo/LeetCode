@@ -1,55 +1,54 @@
-import java.util.*;
-
 class Solution {
 
     int n;
-    public int trap(int[] height) {
-        n = height.length;
-        
-        ArrayDeque<Pair> stack = new ArrayDeque<>();
-        int[] wall = new int[n];
-        for(int i = 0; i < n; i++){
-            wall[i] = height[i];
+
+    class Pair{
+        int height;
+        int index;
+
+        public Pair(int height, int index){
+            this.height = height;
+            this.index = index;
         }
+    }
+
+    public int trap(int[] height) {
+        Deque<Pair> stack = new ArrayDeque<>();
+        this.n = height.length;
+        int[] water = Arrays.copyOf(height, n);
 
         for(int i = 0; i < n; i++){
-            if(wall[i] > 0){
-                while(!stack.isEmpty() && stack.peek().height <= wall[i]){
+            int h = height[i];
+            if(h > 0){
+                while(!stack.isEmpty() && stack.peek().height <= h){
                     Pair pair = stack.pop();
                     for(int j = pair.index + 1; j < i; j++){
-                        wall[j] = pair.height;
+                        water[j] = pair.height;
                     }
                 }
-                stack.push(new Pair(i, wall[i]));
-            }   
-        }
-        int answer = 0;
-
-        while(!stack.isEmpty()){
-            Pair pair = stack.pop();
-            if(stack.isEmpty()) break;
-            Pair peek = stack.peek();
-            for(int i = peek.index + 1; i < pair.index; i++){
-                wall[i] = pair.height;
+                stack.push(new Pair(h, i));
             }
         }
 
-        for(int i = 0; i < n; i++){
-            answer += (wall[i] - height[i]);
+        while(!stack.isEmpty()){
+            Pair right = stack.pop();
+            if(!stack.isEmpty()){
+                Pair left = stack.peek();
+
+                if(left.height > right.height){
+                    for(int i = left.index + 1; i < right.index; i++){
+                        water[i] = right.height;
+                    }
+                }
+            }
         }
 
+        int answer = 0;
 
+        for(int i = 0; i < n; i++){
+            answer += (water[i] - height[i]);
+        }
 
         return answer;
-    }
-}
-
-class Pair{
-    int index;
-    int height;
-
-    public Pair(int index, int height){
-        this.index = index;
-        this.height = height;
     }
 }
