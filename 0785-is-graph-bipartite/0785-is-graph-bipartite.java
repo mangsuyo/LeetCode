@@ -1,43 +1,44 @@
-import java.util.Arrays;
-
 class Solution {
+    int n;
+    public boolean isBipartite(int[][] graph) {
+        this.n = graph.length;
+        char[] nodes = new char[n];
 
-	char[] colors;
+        Arrays.fill(nodes, '.');
 
-	public boolean isBipartite(int[][] graph) {
-		colors = new char[graph.length];
-		Arrays.fill(colors, 'C');
-		
-		for(int i = 0; i < graph.length; i++){
-			if(colors[i] == 'C'){
-				if(!dfs(graph, i, 'A')) return false;
-			}
-		}
-		
-		return true;
-	}
+        for(int i = 0; i < n; i++){
+            if(nodes[i] == '.'){
+                Queue<Integer> queue = new ArrayDeque<>();
+                queue.offer(i);
+                nodes[i] = 'A';
+                while(!queue.isEmpty()){
+                    int curNode = queue.poll();
+                    char nextCh = nodes[curNode] == 'A' ? 'B' : 'A'; 
+                    for(int nextNode: graph[curNode]){
+                        if(nodes[nextNode] == '.'){
+                            queue.offer(nextNode);
+                            nodes[nextNode] = nextCh;
+                        }
+                        else if(nodes[nextNode] == nodes[curNode]) return false;
+                    }
+                }
+            }
+        }
 
-	boolean dfs(int[][] graph, int index, char color) {
-		colors[index] = color;
 
-		int[] nodes = graph[index];
-		for (int node : nodes) {
-			if (colors[node] == 'C') {
-				if (color == 'A') {
-					if (!dfs(graph, node, 'B'))
-						return false;
-				} else {
-					if (!dfs(graph, node, 'A'))
-						return false;
-				}
-			} else {
-				if (colors[node] == color) {
-					return false;
-				}
-			}
-		}
+        return true;
+    }
 
-		return true;
-	}
+    boolean dfs(int[][] graph, char[] nodes, char ch, int node){
+        nodes[node] = ch;
+        char nextCh = ch == 'A' ? 'B' : 'A';
+        for(int nextNode: graph[node]){
+            if(nodes[nextNode] == '.'){
+                if(!dfs(graph, nodes, nextCh, nextNode)) return false;
+            }
+            else if(nodes[nextNode] == ch) return false;
+        }
 
+        return true;
+    }
 }
