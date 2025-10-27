@@ -1,33 +1,37 @@
-import java.util.*;
-
 class Solution {
+    int n;
+    public int coinChange(int[] coins, int amount) {
+        n = coins.length;
+        Queue<Pair> queue = new ArrayDeque<>();
+        queue.offer(new Pair(amount, 0));
+        boolean[] visited = new boolean[amount + 1];
 
-	int min = Integer.MAX_VALUE;
-	int[] memo;
+        if(amount == 0) return 0;
+        
+        while(!queue.isEmpty()){
+            Pair cur = queue.poll();
+            for(int i = 0; i < coins.length; i++){
+                int nextAmount = cur.amount - coins[i];
+                if(nextAmount > 0 && !visited[nextAmount]){
+                    queue.offer(new Pair(nextAmount, cur.count + 1));
+                    visited[nextAmount] = true;
+                }
+                else if(nextAmount == 0){
+                    return cur.count + 1;
+                }
+            }
+        }
 
+        return -1;
+    }
 
-	public int coinChange(int[] coins, int amount) {
-		memo = new int[amount + 1];
-		Arrays.fill(memo, -1);
-		dfs(coins, amount, 0);
-		if(min == Integer.MAX_VALUE) return -1;
-		return min;
-	}
+    class Pair{
+        int amount;
+        int count;
 
-	void dfs(int[] coins, int amount, int count) {
-		if (amount == 0)
-		{
-			if(min > count) min = count;
-			return;
-		}
-		if (amount < 0)
-			return;
-		
-		if(memo[amount] != -1 && memo[amount] <= count) return;
-		memo[amount] = count;
-
-		for (int coin : coins) {
-			dfs(coins, amount - coin, count + 1);
-		}
-	}
+        public Pair(int amount, int count){
+            this.amount = amount;
+            this.count = count;
+        }
+    }
 }
