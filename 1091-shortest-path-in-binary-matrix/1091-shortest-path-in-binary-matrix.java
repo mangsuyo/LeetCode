@@ -1,39 +1,49 @@
-import java.util.*;
-
 class Solution {
-	public int shortestPathBinaryMatrix(int[][] grid) {
-		if (grid[0][0] == 1 || grid[grid.length - 1][grid[0].length - 1] == 1)
-			return -1;
+    int n;
 
-		Queue<List<Integer>> queue = new ArrayDeque<>();
-		boolean[][] visited = new boolean[grid.length][grid[0].length];
+    boolean[][] visited;
+    int[] dr = new int[]{-1, -1, 0, 1, 1, 1, 0, -1};
+    int[] dc = new int[]{0, 1, 1, 1, 0, -1, -1, -1};
 
-		queue.add(List.of(0, 0, 1));
-		visited[0][0] = true;
+    public int shortestPathBinaryMatrix(int[][] grid) {
+        this.n = grid.length;
+        if(grid[0][0] == 1 || grid[n - 1][n - 1] == 1) return -1;
+        if(n == 1) return 1;
 
-		int[] dr = new int[] {-1, -1, -1, 0, 1, 1, 1, 0};
-		int[] dc = new int[] {-1, 0, 1, 1, 1, 0, -1, -1};
+        visited = new boolean[n][n];
+        Queue<Pair> queue = new ArrayDeque<>();
+        
+        queue.offer(new Pair(0, 0, 1));
+        visited[0][0] = true;
 
-		while (!queue.isEmpty()) {
-			List<Integer> cur = queue.poll();
-			int curR = cur.get(0);
-			int curC = cur.get(1);
-			int count = cur.get(2);
-			if (curR == grid.length - 1 && curC == grid[0].length - 1) {
-				return count;
-			}
-			for (int i = 0; i < 8; i++) {
-				int nextR = curR + dr[i];
-				int nextC = curC + dc[i];
-				if (0 <= nextR && nextR < grid.length && 0 <= nextC && nextC < grid[0].length) {
-					if (!visited[nextR][nextC] && grid[nextR][nextC] == 0) {
-						queue.add(List.of(nextR, nextC, count + 1));
-						visited[nextR][nextC] = true;
-					}
-				}
-			}
-		}
-		return -1;
-	}
+        while(!queue.isEmpty()){
+            Pair cur = queue.poll();
+            for(int i = 0; i < 8; i++){
+                int nextR = cur.r + dr[i];
+                int nextC = cur.c + dc[i];
+                if(nextR == n - 1 && nextC == n - 1 && grid[nextR][nextC] == 0) return cur.count + 1;
+                if(0 <= nextR && nextR < n && 0 <= nextC && nextC < n){
+                    if(!visited[nextR][nextC] && grid[nextR][nextC] == 0){
+                        queue.offer(new Pair(nextR, nextC, cur.count + 1));
+                        visited[nextR][nextC] = true;
+                    }
+                }
+            }
+        }
 
+        return -1;
+    }
+
+
+    class Pair{
+        int r;
+        int c;
+        int count;
+
+        public Pair(int r, int c, int count){
+            this.r = r;
+            this.c = c;
+            this.count = count;
+        }
+    }
 }
