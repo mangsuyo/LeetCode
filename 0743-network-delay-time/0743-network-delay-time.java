@@ -19,13 +19,14 @@ class Solution {
             int[] cur = queue.poll();
             int curNode = cur[0];
             int curDist = cur[1];
-
-            if(dists[curNode] < curDist) continue;
+            if(curDist > dists[curNode]) continue;
 
             if(graph.containsKey(curNode)){
                 for(int[] next: graph.get(curNode)){
-                    if(dists[next[0]] == Integer.MAX_VALUE) count += 1;
-                    int nextDist = dists[curNode] + next[1];
+                    if(dists[next[0]] == Integer.MAX_VALUE){
+                        count += 1;
+                    }
+                    int nextDist = curDist + next[1];
                     if(nextDist < dists[next[0]]){
                         queue.offer(new int[]{next[0], nextDist});
                         dists[next[0]] = nextDist;
@@ -35,12 +36,12 @@ class Solution {
         }
 
         if(count != n) return -1;
-        
-        int maxTime = 0;
-        for(int i = 1; i < dists.length; i++){
-            if(maxTime < dists[i]) maxTime = dists[i];
+
+        int answer = 0;
+        for(int i = 1; i <= n; i++){
+            answer = Math.max(answer, dists[i]);
         }
 
-        return maxTime;
+        return answer;
     }
 }
