@@ -2,24 +2,21 @@ class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         Map<Integer, List<Integer>> graph = new HashMap<>();
         int[] indegree = new int[numCourses];
+        int count = 0;
 
-        for(int[] prerequisite: prerequisites){
-            graph.putIfAbsent(prerequisite[1], new ArrayList<>());
-            graph.get(prerequisite[1]).add(prerequisite[0]);
-            indegree[prerequisite[0]] += 1;
+        for(int[] p: prerequisites){
+            graph.putIfAbsent(p[1], new ArrayList<>());
+            graph.get(p[1]).add(p[0]);
+            indegree[p[0]] += 1;
         }
 
         Queue<Integer> queue = new ArrayDeque<>();
-
-        int count = 0;
-
         for(int i = 0; i < numCourses; i++){
             if(indegree[i] == 0){
                 queue.offer(i);
                 count += 1;
             }
         }
-
 
         while(!queue.isEmpty()){
             int curNode = queue.poll();
