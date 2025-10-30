@@ -7,37 +7,34 @@ class Solution {
             graph.putIfAbsent(edges[i][1], new ArrayList<>());
             graph.get(edges[i][0]).add(new double[]{edges[i][1], succProb[i]});
             graph.get(edges[i][1]).add(new double[]{edges[i][0], succProb[i]});
-
         }
 
         double[] dists = new double[n];
-        Arrays.fill(dists, -1.0);
-
-        Queue<double[]> queue = new PriorityQueue<>((a, b) -> Double.compare(b[1], a[1]));
-        queue.offer(new double[]{start_node, 1.0});
+        Arrays.fill(dists, 0);
         dists[start_node] = 1;
 
-        int count = 1;
-
+        Queue<double[]> queue = new PriorityQueue<>((n1, n2) -> Double.compare(n2[1], n1[1]));
+        queue.offer(new double[]{start_node, 1});
 
         while(!queue.isEmpty()){
             double[] cur = queue.poll();
-            if(cur[1] < dists[(int)cur[0]]) continue;
-            if(graph.containsKey((int) cur[0])){
-                for(double[] nextNode: graph.get((int) cur[0])){
-                    if(dists[(int) nextNode[0]] == -1.0) count += 1;
-                    double nextDist = dists[(int) cur[0]] * nextNode[1];
-                    if(nextDist <= dists[(int) nextNode[0]]) continue;
-                    dists[(int) nextNode[0]] = nextDist;
-                    queue.offer(new double[]{nextNode[0], nextDist});
+            int curNode = (int)cur[0];
+            double curDist = cur[1];
+
+            if(curDist < dists[curNode]) continue;
+
+            if(graph.containsKey(curNode)){
+                for(double[] next: graph.get(curNode)){
+                    int nextNode = (int)next[0];
+                    double nextDist = next[1] * curDist;
+                    if(dists[nextNode] < nextDist){
+                        queue.offer(new double[]{nextNode, nextDist});
+                        dists[nextNode] = nextDist;
+                    }
                 }
             }
-        }
 
-        for(int i = 0; i < n; i++){
-            System.out.println(dists[i]);
         }
-
-        return dists[end_node] == -1 ? 0 : dists[end_node];
+        return dists[end_node];
     }
 }
