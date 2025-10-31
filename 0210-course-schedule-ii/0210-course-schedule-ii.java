@@ -1,22 +1,25 @@
 class Solution {
+    int n;
+
     public int[] findOrder(int numCourses, int[][] prerequisites) {
+        this.n = numCourses;
+
+        int[] indegree = new int[n];
         Map<Integer, List<Integer>> graph = new HashMap<>();
-        int[] indegree = new int[numCourses + 1];
 
         for(int[] p: prerequisites){
             graph.putIfAbsent(p[1], new ArrayList<>());
             graph.get(p[1]).add(p[0]);
             indegree[p[0]] += 1;
         }
+        List<Integer> list = new ArrayList<>();
 
-        int[] visited = new int[numCourses];
         Queue<Integer> queue = new ArrayDeque<>();
-        int count = 0;
 
-        for(int i = 0; i < numCourses; i++){
+        for(int i = 0; i < n; i++){
             if(indegree[i] == 0){
                 queue.offer(i);
-                visited[count++] = i;
+                list.add(i);
             }
         }
 
@@ -27,12 +30,18 @@ class Solution {
                     indegree[nextNode]--;
                     if(indegree[nextNode] == 0){
                         queue.offer(nextNode);
-                        visited[count++] = nextNode;
+                        list.add(nextNode);
                     }
                 }
             }
         }
+        if(list.size() != n) return new int[]{};
 
-        return count == numCourses? visited : new int[]{};
+        int[] answer = new int[n];
+        for(int i = 0; i < n; i++){
+            answer[i] = list.get(i);
+        }
+
+        return answer;
     }
 }
