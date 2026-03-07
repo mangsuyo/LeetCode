@@ -4,6 +4,7 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 ## Array
 |  |
 | ------- |
+| [0001-two-sum](https://github.com/mangsuyo/LeetCode/tree/master/0001-two-sum) |
 | [0200-number-of-islands](https://github.com/mangsuyo/LeetCode/tree/master/0200-number-of-islands) |
 | [1091-shortest-path-in-binary-matrix](https://github.com/mangsuyo/LeetCode/tree/master/1091-shortest-path-in-binary-matrix) |
 ## Depth-First Search
@@ -45,4 +46,8 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 |  |
 | ------- |
 | [0207-course-schedule](https://github.com/mangsuyo/LeetCode/tree/master/0207-course-schedule) |
+## Hash Table
+|  |
+| ------- |
+| [0001-two-sum](https://github.com/mangsuyo/LeetCode/tree/master/0001-two-sum) |
 <!---LeetCode Topics End-->
