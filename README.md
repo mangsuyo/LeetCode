@@ -50,4 +50,16 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 |  |
 | ------- |
 | [0001-two-sum](https://github.com/mangsuyo/LeetCode/tree/master/0001-two-sum) |
+## Math
+|  |
+| ------- |
+| [0070-climbing-stairs](https://github.com/mangsuyo/LeetCode/tree/master/0070-climbing-stairs) |
+## Dynamic Programming
+|  |
+| ------- |
+| [0070-climbing-stairs](https://github.com/mangsuyo/LeetCode/tree/master/0070-climbing-stairs) |
+## Memoization
+|  |
+| ------- |
+| [0070-climbing-stairs](https://github.com/mangsuyo/LeetCode/tree/master/0070-climbing-stairs) |
 <!---LeetCode Topics End-->
