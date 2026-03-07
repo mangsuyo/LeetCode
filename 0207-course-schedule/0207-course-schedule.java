@@ -1,33 +1,35 @@
 class Solution {
-    int n;
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        this.n = numCourses;
+        int n = numCourses;
         Map<Integer, List<Integer>> graph = new HashMap<>();
         int[] indegree = new int[n];
-        
-        for(int[] p: prerequisites){
-            graph.putIfAbsent(p[1], new ArrayList<>());
-            graph.get(p[1]).add(p[0]);
-            indegree[p[0]] += 1;
+
+        for(int i = 0; i < prerequisites.length; i++){
+            int[] cur = prerequisites[i];
+            graph.putIfAbsent(cur[1], new ArrayList<>());
+            graph.get(cur[1]).add(cur[0]);
+            indegree[cur[0]] += 1;
         }
 
-        Queue<Integer> queue = new ArrayDeque<>();
+        int[] order = new int[n];
         int count = 0;
+        Queue<Integer> queue = new ArrayDeque<>();
         for(int i = 0; i < n; i++){
             if(indegree[i] == 0){
                 queue.offer(i);
-                count += 1;
+                order[count++] = i;
             }
         }
 
+
         while(!queue.isEmpty()){
-            int curNode = queue.poll();
-            if(graph.containsKey(curNode)){
-                for(int nextNode: graph.get(curNode)){
+            int cur = queue.poll();
+            if(graph.containsKey(cur)){
+                for(int nextNode: graph.get(cur)){
                     indegree[nextNode]--;
                     if(indegree[nextNode] == 0){
                         queue.offer(nextNode);
-                        count += 1;
+                        order[count++] = nextNode;
                     }
                 }
             }
