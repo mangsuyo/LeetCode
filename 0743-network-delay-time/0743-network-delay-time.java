@@ -1,46 +1,41 @@
 class Solution {
-    public int networkDelayTime(int[][] times, int n, int k) {
+    public int networkDelayTime(int[][] times, int n, int k) {        
         Map<Integer, List<int[]>> graph = new HashMap<>();
-        for(int[] time: times){
+        for(int i = 0; i < times.length; i++){
+            int[] time = times[i];
             graph.putIfAbsent(time[0], new ArrayList<>());
             graph.get(time[0]).add(new int[]{time[1], time[2]});
         }
 
         int[] dists = new int[n + 1];
         Arrays.fill(dists, Integer.MAX_VALUE);
-
-        Queue<int[]> queue = new PriorityQueue<>((p1, p2) -> p1[1] - p2[1]);
-        queue.offer(new int[]{k, 0});
         dists[k] = 0;
 
-        int count = 1;
+        Queue<int[]> pq = new PriorityQueue<>((e1, e2) -> e1[1] - e2[1]);
+        pq.offer(new int[]{k, 0});
 
-        while(!queue.isEmpty()){
-            int[] cur = queue.poll();
-            int curNode = cur[0];
-            int curDist = cur[1];
-            if(curDist > dists[curNode]) continue;
-
-            if(graph.containsKey(curNode)){
-                for(int[] next: graph.get(curNode)){
-                    int nextNode = next[0];
-                    int nextDist = next[1] + curDist;
-                    if(dists[nextNode] == Integer.MAX_VALUE){
-                        count += 1;
-                    }
-                    if(nextDist < dists[nextNode]){
-                        dists[nextNode] = nextDist;
-                        queue.offer(new int[]{nextNode, nextDist});
-                    }
+        while(!pq.isEmpty()){
+            int[] cur = pq.poll();
+            if(dists[cur[0]] < cur[1]) continue;
+            if(!graph.containsKey(cur[0])) continue;
+            for(int[] next: graph.get(cur[0])){
+                int nextNode = next[0];
+                int nextDist = next[1] + cur[1];
+                if(dists[nextNode] > nextDist){
+                    pq.offer(new int[]{nextNode, nextDist});
+                    dists[nextNode] = nextDist;
                 }
             }
-        }   
+        }
+
 
         int answer = 0;
         for(int i = 1; i <= n; i++){
-            answer = Math.max(answer, dists[i]);
-        }
+            if(dists[i] > answer) answer = dists[i];
+        }  
 
-        return count == n ? answer : -1;
+        if(answer == Integer.MAX_VALUE) return -1;
+
+        return answer; 
     }
 }
