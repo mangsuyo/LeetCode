@@ -1,35 +1,32 @@
 class Solution {
     int n;
     public int coinChange(int[] coins, int amount) {
-        n = coins.length;
-        Queue<Pair> queue = new ArrayDeque<>();
-        queue.offer(new Pair(amount, 0));
+        this.n = coins.length;
+        Queue<Coin> queue = new ArrayDeque<>();
         boolean[] visited = new boolean[amount + 1];
+        queue.offer(new Coin(amount, 0));
+        visited[amount] = true;
 
-        if(amount == 0) return 0;
-        
         while(!queue.isEmpty()){
-            Pair cur = queue.poll();
-            for(int i = 0; i < coins.length; i++){
-                int nextAmount = cur.amount - coins[i];
-                if(nextAmount > 0 && !visited[nextAmount]){
-                    queue.offer(new Pair(nextAmount, cur.count + 1));
-                    visited[nextAmount] = true;
-                }
-                else if(nextAmount == 0){
-                    return cur.count + 1;
+            Coin cur = queue.poll();
+            if(cur.amount == 0) return cur.count;
+            for(int i = 0; i < n; i++){
+                int next = cur.amount - coins[i];
+                if(next >= 0 && !visited[next]){
+                    queue.offer(new Coin(next, cur.count + 1));
+                    visited[next] = true;
                 }
             }
         }
-
         return -1;
+
     }
 
-    class Pair{
+    class Coin{
         int amount;
         int count;
 
-        public Pair(int amount, int count){
+        Coin(int amount, int count){
             this.amount = amount;
             this.count = count;
         }
