@@ -2,51 +2,26 @@ class Solution {
     int n;
     public int trap(int[] height) {
         this.n = height.length;
-        int[] waterH = new int[n];
-
-        for(int i = 0; i < n; i++){
-            waterH[i] = height[i];
-        }
-        Deque<Node> stack = new ArrayDeque<>();
         int answer = 0;
+        Deque<Integer> stack = new ArrayDeque<>();
+
         for(int i = 0; i < n; i++){
-            int idx = i;
             int h = height[i];
-            while(!stack.isEmpty() && stack.peek().h <= h){
-                Node past = stack.pop();
-                for(int j = past.index; j < i; j++){
-                    waterH[j] = past.h;
+            while(!stack.isEmpty() && height[stack.peek()] <= h){
+                int bottom = stack.pop();
+                if(stack.isEmpty()){
+                    break;
                 }
+                int left = stack.peek();
+                int width = i - left - 1;
+                int waterH = Math.min(h, height[left]) - height[bottom] ;
+
+                answer += width * waterH;
             }
-            stack.push(new Node(i, h));   
-        }
 
-        while(!stack.isEmpty()){
-            Node right = stack.pop();
-            if(stack.isEmpty()) break;
-            Node left = stack.peek();
-            for(int i = left.index + 1; i < right.index; i++){
-                waterH[i] = Math.max(waterH[i], right.h);
-            }
-        }
-
-
-        for(int i = 0; i < n; i++){
-            answer += (waterH[i] - height[i]);
-            // System.out.println(waterH[i]);
+            stack.push(i);
         }
 
         return answer;
-    }
-
-
-    class Node{
-        int index;
-        int h;
-
-        Node(int index, int h){
-            this.index = index;
-            this.h = h;
-        }
     }
 }
