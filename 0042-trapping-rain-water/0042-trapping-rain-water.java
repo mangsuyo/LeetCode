@@ -1,54 +1,52 @@
 class Solution {
-
     int n;
-
-    class Pair{
-        int height;
-        int index;
-
-        public Pair(int height, int index){
-            this.height = height;
-            this.index = index;
-        }
-    }
-
     public int trap(int[] height) {
-        Deque<Pair> stack = new ArrayDeque<>();
         this.n = height.length;
-        int[] water = Arrays.copyOf(height, n);
+        int[] waterH = new int[n];
 
         for(int i = 0; i < n; i++){
+            waterH[i] = height[i];
+        }
+        Deque<Node> stack = new ArrayDeque<>();
+        int answer = 0;
+        for(int i = 0; i < n; i++){
+            int idx = i;
             int h = height[i];
-            if(h > 0){
-                while(!stack.isEmpty() && stack.peek().height <= h){
-                    Pair pair = stack.pop();
-                    for(int j = pair.index + 1; j < i; j++){
-                        water[j] = pair.height;
-                    }
+            while(!stack.isEmpty() && stack.peek().h <= h){
+                Node past = stack.pop();
+                for(int j = past.index; j < i; j++){
+                    waterH[j] = past.h;
                 }
-                stack.push(new Pair(h, i));
             }
+            stack.push(new Node(i, h));   
         }
 
         while(!stack.isEmpty()){
-            Pair right = stack.pop();
-            if(!stack.isEmpty()){
-                Pair left = stack.peek();
-
-                if(left.height > right.height){
-                    for(int i = left.index + 1; i < right.index; i++){
-                        water[i] = right.height;
-                    }
-                }
+            Node right = stack.pop();
+            if(stack.isEmpty()) break;
+            Node left = stack.peek();
+            for(int i = left.index + 1; i < right.index; i++){
+                waterH[i] = Math.max(waterH[i], right.h);
             }
         }
 
-        int answer = 0;
 
         for(int i = 0; i < n; i++){
-            answer += (water[i] - height[i]);
+            answer += (waterH[i] - height[i]);
+            // System.out.println(waterH[i]);
         }
 
         return answer;
+    }
+
+
+    class Node{
+        int index;
+        int h;
+
+        Node(int index, int h){
+            this.index = index;
+            this.h = h;
+        }
     }
 }
