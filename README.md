@@ -57,9 +57,18 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 ## Dynamic Programming
 |  |
 | ------- |
+| [0032-longest-valid-parentheses](https://github.com/mangsuyo/LeetCode/tree/master/0032-longest-valid-parentheses) |
 | [0070-climbing-stairs](https://github.com/mangsuyo/LeetCode/tree/master/0070-climbing-stairs) |
 ## Memoization
 |  |
 | ------- |
 | [0070-climbing-stairs](https://github.com/mangsuyo/LeetCode/tree/master/0070-climbing-stairs) |
+## String
+|  |
+| ------- |
+| [0032-longest-valid-parentheses](https://github.com/mangsuyo/LeetCode/tree/master/0032-longest-valid-parentheses) |
+## Stack
+|  |
+| ------- |
+| [0032-longest-valid-parentheses](https://github.com/mangsuyo/LeetCode/tree/master/0032-longest-valid-parentheses) |
 <!---LeetCode Topics End-->
