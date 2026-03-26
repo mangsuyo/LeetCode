@@ -9,6 +9,7 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 | [0200-number-of-islands](https://github.com/mangsuyo/LeetCode/tree/master/0200-number-of-islands) |
 | [0322-coin-change](https://github.com/mangsuyo/LeetCode/tree/master/0322-coin-change) |
 | [1091-shortest-path-in-binary-matrix](https://github.com/mangsuyo/LeetCode/tree/master/1091-shortest-path-in-binary-matrix) |
+| [1514-path-with-maximum-probability](https://github.com/mangsuyo/LeetCode/tree/master/1514-path-with-maximum-probability) |
 ## Depth-First Search
 |  |
 | ------- |
@@ -41,14 +42,17 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 | [0207-course-schedule](https://github.com/mangsuyo/LeetCode/tree/master/0207-course-schedule) |
 | [0743-network-delay-time](https://github.com/mangsuyo/LeetCode/tree/master/0743-network-delay-time) |
 | [0785-is-graph-bipartite](https://github.com/mangsuyo/LeetCode/tree/master/0785-is-graph-bipartite) |
+| [1514-path-with-maximum-probability](https://github.com/mangsuyo/LeetCode/tree/master/1514-path-with-maximum-probability) |
 ## Heap (Priority Queue)
 |  |
 | ------- |
 | [0743-network-delay-time](https://github.com/mangsuyo/LeetCode/tree/master/0743-network-delay-time) |
+| [1514-path-with-maximum-probability](https://github.com/mangsuyo/LeetCode/tree/master/1514-path-with-maximum-probability) |
 ## Shortest Path
 |  |
 | ------- |
 | [0743-network-delay-time](https://github.com/mangsuyo/LeetCode/tree/master/0743-network-delay-time) |
+| [1514-path-with-maximum-probability](https://github.com/mangsuyo/LeetCode/tree/master/1514-path-with-maximum-probability) |
 ## Topological Sort
 |  |
 | ------- |
