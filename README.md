@@ -10,6 +10,7 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 | [0322-coin-change](https://github.com/mangsuyo/LeetCode/tree/master/0322-coin-change) |
 | [1091-shortest-path-in-binary-matrix](https://github.com/mangsuyo/LeetCode/tree/master/1091-shortest-path-in-binary-matrix) |
 | [1514-path-with-maximum-probability](https://github.com/mangsuyo/LeetCode/tree/master/1514-path-with-maximum-probability) |
+| [2035-partition-array-into-two-arrays-to-minimize-sum-difference](https://github.com/mangsuyo/LeetCode/tree/master/2035-partition-array-into-two-arrays-to-minimize-sum-difference) |
 ## Depth-First Search
 |  |
 | ------- |
@@ -72,6 +73,7 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 | [0042-trapping-rain-water](https://github.com/mangsuyo/LeetCode/tree/master/0042-trapping-rain-water) |
 | [0070-climbing-stairs](https://github.com/mangsuyo/LeetCode/tree/master/0070-climbing-stairs) |
 | [0322-coin-change](https://github.com/mangsuyo/LeetCode/tree/master/0322-coin-change) |
+| [2035-partition-array-into-two-arrays-to-minimize-sum-difference](https://github.com/mangsuyo/LeetCode/tree/master/2035-partition-array-into-two-arrays-to-minimize-sum-difference) |
 ## Memoization
 |  |
 | ------- |
@@ -89,8 +91,29 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 |  |
 | ------- |
 | [0042-trapping-rain-water](https://github.com/mangsuyo/LeetCode/tree/master/0042-trapping-rain-water) |
+| [2035-partition-array-into-two-arrays-to-minimize-sum-difference](https://github.com/mangsuyo/LeetCode/tree/master/2035-partition-array-into-two-arrays-to-minimize-sum-difference) |
 ## Monotonic Stack
 |  |
 | ------- |
 | [0042-trapping-rain-water](https://github.com/mangsuyo/LeetCode/tree/master/0042-trapping-rain-water) |
+## Binary Search
+|  |
+| ------- |
+| [2035-partition-array-into-two-arrays-to-minimize-sum-difference](https://github.com/mangsuyo/LeetCode/tree/master/2035-partition-array-into-two-arrays-to-minimize-sum-difference) |
+## Bit Manipulation
+|  |
+| ------- |
+| [2035-partition-array-into-two-arrays-to-minimize-sum-difference](https://github.com/mangsuyo/LeetCode/tree/master/2035-partition-array-into-two-arrays-to-minimize-sum-difference) |
+## Sorting
+|  |
+| ------- |
+| [2035-partition-array-into-two-arrays-to-minimize-sum-difference](https://github.com/mangsuyo/LeetCode/tree/master/2035-partition-array-into-two-arrays-to-minimize-sum-difference) |
+## Ordered Set
+|  |
+| ------- |
+| [2035-partition-array-into-two-arrays-to-minimize-sum-difference](https://github.com/mangsuyo/LeetCode/tree/master/2035-partition-array-into-two-arrays-to-minimize-sum-difference) |
+## Bitmask
+|  |
+| ------- |
+| [2035-partition-array-into-two-arrays-to-minimize-sum-difference](https://github.com/mangsuyo/LeetCode/tree/master/2035-partition-array-into-two-arrays-to-minimize-sum-difference) |
 <!---LeetCode Topics End-->
